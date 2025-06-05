@@ -8,29 +8,32 @@ pygame.init()
 
 # Configuração e criação da tela
 largura = 600
-altura = 400
+altura = 600
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Jogo da cobrinha")
+#a linha 13 é o nome do jogo
 
 # Cores do jogo
 BRANCO = (255,255,255)
-VERDE = (0, 255, 0)
+AMARELO = (255, 255, 0)
 PRETO = (0,0,0)
 VERMELHO = (255,0,0)
+#as cores podem ser mudadas, é so pesquisar a cor em RGB
 
 # Criar um relógio
 clock = pygame.time.Clock()
-velocidade = 15 
+velocidade = 10
+#Velocidade da cobrina, quanto mais alto o valor mais díficil fica
 
-# Tamanho do bloco
+# Tamanho do bloco da cobrinha e do bloco da comida
 tamanho_bloco = 20 
 
-# Fonte 
+# Fonte do texto do jogo
 fonte = pygame.font.SysFont(None, 35)
 
-# Função para mostrar a pontuação na tela
+# Função para mostrar O TEXTO SOBRE pontuação na tela
 def mostrar_pontuacao(pontos):
-    valor = fonte.render("Pontos:", str(pontos), True, PRETO)
+    valor = fonte.render(f"PONTOS QUE GANHEI: {pontos}", True, PRETO)
     tela.blit(valor, [10,10])
 
 # Função principal do jogo
@@ -48,23 +51,23 @@ def jogo():
     comida_x = round(random.randrange(0, largura - tamanho_bloco) / 20) * 20
     comida_y = round(random.randrange(0, altura - tamanho_bloco) / 20) * 20
 
-    fim_de_jogo = False 
+    fim_de_jogo = False #controla quando o jogo acaba
 
     while not fim_de_jogo:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 fim_de_jogo = True
             if evento.type == pygame.KEYDOWN:
-                if evento.key == pygame.K_LEFT:
+                if evento.key == pygame.K_a:
                     x_mudanca = -tamanho_bloco
                     y_mudanca = 0
-                elif evento.key == pygame.K_RIGHT:
+                elif evento.key == pygame.K_d:
                     x_mudanca = tamanho_bloco
                     y_mudanca = 0
-                elif evento.key == pygame.K_UP:
+                elif evento.key == pygame.K_w:
                     y_mudanca = -tamanho_bloco
                     x_mudanca = 0
-                elif evento.key == pygame.K_DOWN:
+                elif evento.key == pygame.K_s:
                     y_mudanca = tamanho_bloco
                     x_mudanca = 0
 
@@ -79,7 +82,7 @@ def jogo():
         tela.fill(BRANCO)
 
         pygame.draw.rect(tela, VERMELHO, [comida_x, comida_y, tamanho_bloco, tamanho_bloco])
-
+#imagens com a funcao de upload image.load ("cabeca.png")
         cabeca = []
         cabeca.append(x)
         cabeca.append(y)
@@ -95,7 +98,7 @@ def jogo():
         
         # Desenha todos os blocos da cobra 
         for bloco in cobra:
-            pygame.draw.rect(tela, VERDE, [bloco[0], bloco[1], tamanho_bloco, tamanho_bloco])
+            pygame.draw.rect(tela, AMARELO, [bloco[0], bloco[1], tamanho_bloco, tamanho_bloco])
 
         # Mostrar a pontuação
         mostrar_pontuacao(comprimento_cobra - 1)
@@ -112,7 +115,7 @@ def jogo():
 
     # Quando terminar o jogo
     tela.fill(BRANCO)
-    mensagem = fonte.render("GAME OVER, PONTUAÇÃO:", str(comprimento_cobra - 1), True, VERMELHO)
+    mensagem = fonte.render(f"GAME OVER, PONTUAÇÃO:{comprimento_cobra - 1}", True, PRETO)
     tela.blit(mensagem, [largura / 6, altura / 3 ])
     pygame.display.update()
     time.sleep(3)
