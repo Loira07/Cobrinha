@@ -13,11 +13,16 @@ tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Jogo da cobrinha")
 #a linha 13 é o nome do jogo
 
-# Cores do jogo
+# Cores da cobrinha e da comida
+def cores_diponiveis
 BRANCO = (255,255,255)
-AMARELO = (255, 255, 0)
 PRETO = (0,0,0)
+AMARELO = (255, 255, 0)
 VERMELHO = (255,0,0)
+ROXO = (128,0,128)
+LARANJA = (255,165,0)
+VERDE = (0,255,0)
+
 #as cores podem ser mudadas, é so pesquisar a cor em RGB
 
 # Criar um relógio
@@ -36,6 +41,18 @@ def mostrar_pontuacao(pontos):
     valor = fonte.render(f"PONTOS QUE GANHEI: {pontos}", True, PRETO)
     tela.blit(valor, [10,10])
 
+#Desenhar a cobra com a cor expacifica
+def desenha_cobra(tela, cobra_lista, tamanho_bloco, cor_da_cobra):
+    for x, y in cobra_lista:
+        pygame.draw.rect(tela, cor_da_cobra, [x, y, tamanho_bloco, tamanho_bloco])
+
+#Gera uma nome comida e sua cor
+def gerar_nova_comida(largura_tela, altuta_tela, tamanho_bloco, cores_disponiveis):
+    nova_comida_x= round(random.randrange(0, largura_tela - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
+    nova_comida_y= round(random.randrange(0, altuta_tela - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
+    nova_cor_comida= random.choice(cores_disponiveis)
+    return nova_comida_x, nova_comida_y, nova_cor_comida
+
 # Função principal do jogo
 def jogo():
     # Definir a posição inicial da cobra
@@ -47,9 +64,13 @@ def jogo():
     cobra = []
     comprimento_cobra = 1
 
-    # Posição aleatória para a comida
-    comida_x = round(random.randrange(0, largura - tamanho_bloco) / 20) * 20
-    comida_y = round(random.randrange(0, altura - tamanho_bloco) / 20) * 20
+    # Cor inicial da cobra
+    cor_cobra_atual= random.choice(cores_disponiveis)# começa com uma cor aleatória
+
+    #Posição e cor inicial da comida
+    comida_x, comida_y, cor_comida_atual=  gerar_nova_comida(largura, altura, tamanho_bloco, cores_disponiveis=)
+
+    
 
     fim_de_jogo = False #controla quando o jogo acaba
 
@@ -81,8 +102,9 @@ def jogo():
         
         tela.fill(BRANCO)
 
-        pygame.draw.rect(tela, VERMELHO, [comida_x, comida_y, tamanho_bloco, tamanho_bloco])
-#imagens com a funcao de upload image.load ("cabeca.png")
+        #Desenha comida com sua cor atual
+        pygame.draw.rect(tela, cor_comida_atual, [comida_x, comida_y, tamanho_bloco, tamanho_bloco])
+
         cabeca = []
         cabeca.append(x)
         cabeca.append(y)
@@ -96,9 +118,8 @@ def jogo():
             if bloco == cabeca:
                 fim_de_jogo = True 
         
-        # Desenha todos os blocos da cobra 
-        for bloco in cobra:
-            pygame.draw.rect(tela, AMARELO, [bloco[0], bloco[1], tamanho_bloco, tamanho_bloco])
+        # Desenha todos os blocos da cobra com a cor atual
+        desenha_cobra(tela, cobra, tamanho_bloco, cor_cobra_atual)
 
         # Mostrar a pontuação
         mostrar_pontuacao(comprimento_cobra - 1)
@@ -107,9 +128,9 @@ def jogo():
 
         # Verifica se a cobra comeu a comida
         if x == comida_x and y == comida_y:
-            comida_x = round(random.randrange(0, largura - tamanho_bloco) / 20) * 20
-            comida_y = round(random.randrange(0, altura - tamanho_bloco) / 20) * 20
             comprimento_cobra += 1 
+            #Muda cor da cobrinha para cor da comida
+            cor_cobra_atual= cor_comida_atual= gerar_nova_comida(largura, altura, tamanho_bloco, cores_disponiveis=)
         
         clock.tick(velocidade)
 
