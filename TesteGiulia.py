@@ -10,6 +10,8 @@ pygame.init()
 largura = 600
 altura = 600
 tela = pygame.display.set_mode((largura, altura))
+Acomida = 500
+cenario = pygame.image.load('fundo_ flor.png')
 pygame.display.set_caption("Jogo da cobrinha")
 
 # Cores da cobrinha e da comida
@@ -45,9 +47,9 @@ def desenha_cobra(tela, cobra_lista, tamanho_bloco, cor_da_cobra):
         pygame.draw.rect(tela, cor_da_cobra, [x, y, tamanho_bloco, tamanho_bloco])
 
 # Função para gerar comida com posição e cor aleatória
-def gerar_nova_comida(largura_tela, altura_tela, tamanho_bloco, cores_disponiveis):
+def gerar_nova_comida(largura_tela, Acomida_tela, tamanho_bloco, cores_disponiveis):
     nova_comida_x = round(random.randrange(0, largura_tela - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
-    nova_comida_y = round(random.randrange(0, altura_tela - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
+    nova_comida_y = round(random.randrange(0, Acomida_tela - tamanho_bloco) / tamanho_bloco) * tamanho_bloco
     nova_cor_comida = random.choice(cores_disponiveis)
     return nova_comida_x, nova_comida_y, nova_cor_comida
 
@@ -91,7 +93,8 @@ def jogo():
         if x >= largura or x < 0 or y >= altura or y < 0:
             fim_de_jogo = True 
         
-        tela.fill(BRANCO)
+        #Fundo da tela
+        tela.blit(cenario, (0,0))
 
         pygame.draw.rect(tela, cor_comida_atual, [comida_x, comida_y, tamanho_bloco, tamanho_bloco])
 
