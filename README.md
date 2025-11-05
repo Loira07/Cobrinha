@@ -9,4 +9,4 @@ A principio programamos igual o vídeo, mas percebemos que havia alguns erros, e
 - Mudamos os controles de jogo;
 - Arrumamos o placar e a tela final de jogo;
 
-Ao longo dos meses em que trabalhamos na programação, tivemos alguns problemas com linhas de código que estavam erradas, ou váreaveis que não tinhamos programado. Outro problema que enfrentamos foi na questão de todas vez que iamos abrir o Visual Studio Code, tinhamos que instalar novamente o pytohn e pygame, e isso nos tomava bastante tempo. Ao todo demoramos 3 meses para progarmar e arrumar tudo.
+Ao longo dos meses em que trabalhamos na programação, tivemos alguns problemas com linhas de código que estavam erradas, ou váreaveis que não tinhamos programado. Outro problema que enfrentamos foi na questão de todas vez que iamos abrir o Visual Studio Code, tinhamos que instalar novamente o pytohn e pygame, e isso nos tomava bastante tempo. Ao todo demoramos 3 meses para progarmar e arrumar tudo. Ao final o jogo ficou como queriamos.
